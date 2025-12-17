@@ -124,6 +124,31 @@ app.delete('/api/favorites/:id/:animeId', async (req, res) => {
         }
     }
 });
+app.get('/api/disponame', async (req, res) => {
+
+    const {name} = req.body;
+
+    try {
+        const existingUser = await prisma.user.findMany({
+            select: {
+                name: true
+            },
+            where: {
+                name : name
+            }
+        });
+
+        const isAvailable = (existingUser.length <= 0);
+
+        res.json(isAvailable);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erreur serveur" });
+    }
+
+})
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

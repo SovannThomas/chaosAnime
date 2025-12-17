@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "npx tsx server.ts"
+  },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.1.0",
     "@prisma/client": "^7.1.0",

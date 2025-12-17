@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../views/HomeView.vue'
 import Detail from '../views/Detail.vue'
 
 import Favorites from '../views/Favorites.vue'
@@ -20,6 +20,8 @@ const router = createRouter({
     {
       path: '/:id',
       name: 'Detail',
+      path: '/profile/:id',
+      name: 'Profile',
       component: Detail,
       props: true
     }
@@ -27,4 +29,3 @@ const router = createRouter({
 })
 
 export default router
-
