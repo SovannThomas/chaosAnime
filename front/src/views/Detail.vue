@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <div class="avatar" aria-label="Avatar">
-      <img :src="imageUrl" alt="Avatar">
+    <div class="avatar-container">
+      <img :src="avatarUrl" alt="Avatar" class="avatar" />
     </div>
 
     <input class="name" type="text" :value="username" @input="updateUsername" disabled></input>
@@ -14,12 +14,19 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const props = defineProps({
   username: { type: String, default: "nom" },
   mail: { type: String, default: "Email" },
-  imageUrl: { type: String, default: "https://api.dicebear.com/6.x/pixel-art/png?seed=${id}" },
+  imageUrl: { type: String, default: "https://api.dicebear.com/6.x/pixel-art/png?seed=" },
 })
 defineEmits(["edit"])
+
+const route = useRoute()
+const id = computed(() => route.params.id || 'default')
+const avatarUrl = computed(() => `${props.imageUrl}${id.value}`)
 </script>
 
 <style scoped>
