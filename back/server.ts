@@ -68,7 +68,7 @@ app.put('/api/user/:id', async (req, res) => {
     }
 });
 
-app.get('/api/dispoName', async (req, res) => {
+app.get('/api/disponame', async (req, res) => {
 
     const {name} = req.body;
 
