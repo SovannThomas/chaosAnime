@@ -1,37 +1,36 @@
 <script setup>
-// Router est maintenant configuré
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import Header from './components/header.vue'
+
+const route = useRoute()
+const id = computed(() => route.params.id || 'default')
+const imageUrl = computed(() => `https://api.dicebear.com/6.x/pixel-art/png?seed=${id.value}`)
 </script>
 
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Accueil</router-link>
-    </nav>
-    <router-view />
+    <Header />
+    <main>
+      <router-view />
+
+      <img :src="imageUrl" alt="Yuji Itadori">
+    </main>
   </div>
 </template>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-nav {
-  padding: 1rem;
-  background-color: #f0f0f0;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-  text-decoration: none;
-  margin-right: 1rem;
-}
-
-nav a.router-link-active {
-  color: #42b983;
+main {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
 }
 </style>
