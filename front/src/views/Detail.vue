@@ -1,11 +1,11 @@
 <template>
   <div class="page">
-    <div class="avatar-container">
-      <img :src="avatarUrl" alt="Avatar" class="avatar" />
+    <div class="avatar" aria-label="Avatar">
+      <span class="avatar-icon">👤</span>
     </div>
 
-    <input class="name" type="text" :value="username" @input="updateUsername" disabled></input>
-    <input class="mail" type="email" :value="mail" @input="updateMail" disabled></input>
+    <div class="name">{{ username }}</div>
+    <div class="mail">{{ mail }}</div>
 
     <button class="btn" type="button" @click="$emit('edit')">
       modifier
@@ -14,19 +14,11 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-
-const props = defineProps({
+defineProps({
   username: { type: String, default: "nom" },
   mail: { type: String, default: "Email" },
-  imageUrl: { type: String, default: "https://api.dicebear.com/6.x/pixel-art/png?seed=" },
 })
 defineEmits(["edit"])
-
-const route = useRoute()
-const id = computed(() => route.params.id || 'default')
-const avatarUrl = computed(() => `${props.imageUrl}${id.value}`)
 </script>
 
 <style scoped>
@@ -47,10 +39,9 @@ const avatarUrl = computed(() => `${props.imageUrl}${id.value}`)
   display: grid;
   place-items: center;
   margin: 0 auto;
-  overflow: hidden;
 }
 
-.avatar-image {
+.avatar-icon {
   font-size: 46px;
   line-height: 1;
 }
