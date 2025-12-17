@@ -4,10 +4,19 @@
       <img :src="avatarUrl" alt="Avatar" class="avatar" />
     </div>
 
-    <input class="name" type="text" :value="username" @input="updateUsername" disabled></input>
-    <input class="mail" type="email" :value="mail" @input="updateMail" disabled></input>
+    <!-- Affichage -->
+    <div class="name">{{ profile.username }}</div>
+    <div class="mail">{{ profile.email }}</div>
 
-    <button class="btn" type="button" @click="$emit('edit')">
+    <!-- Inputs -->
+    <input
+      class="name"
+      type="text"
+      v-model="profile.username"
+      placeholder="Nom d'utilisateur"
+    />
+
+    <button class="btn" type="button" @click="save">
       modifier
     </button>
   </div>
@@ -16,17 +25,27 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { usersMock } from "./../../mocks/users"
 const route = useRoute()
 defineProps({
   username: { type: String, default: "nom" },
   mail: { type: String, default: "Email" },
+})
+const user = computed(() => {
+  const id = Number(route.params.id)
+  return usersMock.find(u => u.id === id)
 })
 
 
 const id = computed(() => route.params.id || 'default')
 const avatarUrl = computed(() => `https://api.dicebear.com/6.x/pixel-art/png?seed=${id.value}`)
 
-defineEmits(["edit"])
+const emit = defineEmits(["edit"])
+
+const save = () => {
+  console.log("Profil modifié :", profile.value)
+  emit("edit", profile.value)
+}
 </script>
 
 <style scoped>
