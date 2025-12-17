@@ -7,7 +7,6 @@ import cors = require('cors');
 
 app.use(express.json())
 
-app.options('*', cors() )
 app.use(cors());
 
 app.get('/api/user', async (req, res) => {
@@ -97,8 +96,6 @@ app.get('/api/disponame', async (req, res) => {
     }
 
 })
-
-
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
