@@ -5,14 +5,14 @@
     </div>
 
     <!-- Affichage -->
-    <div class="name">{{ profile.username }}</div>
+    <div class="name">{{ profile.name }}</div>
     <div class="mail">{{ profile.email }}</div>
 
     <!-- Inputs -->
     <input
       class="name"
       type="text"
-      v-model="profile.username"
+      v-model="profile.name"
       placeholder="Nom d'utilisateur"
     />
 
@@ -23,26 +23,26 @@
 </template>
 
 <script setup>
-import { computed } from "vue"
-import { usersMock } from "./../mocks/users"
+import { ref, computed, onMounted } from "vue"
 import { useRoute } from "vue-router"
+import CallBackend from "../services/api"
 
 const route = useRoute()
-
-const profile = computed(() => {
-  const id = Number(route.params.id)
-  return usersMock.find(u => u.id === id)
+var profile = ref({
+  id:'',
+  name:'',
+  email:'',
+  avatar:''
 })
-const user = computed(() => {
-  const id = Number(route.params.id)
-  return usersMock.find(u => u.id === id)
-})
-
-
-const id = computed(() => route.params.id || 'default')
-const avatarUrl = computed(() => `https://api.dicebear.com/6.x/pixel-art/png?seed=${id.value}`)
+const avatarUrl = computed(() => `https://api.dicebear.com/6.x/pixel-art/png?seed=${profile.avatar}`)
 
 const emit = defineEmits(["edit"])
+
+onMounted(async () => {
+  const response = await CallBackend.get(`/api/user/${route.params.id}`)
+  profile.value = response
+  console.log("Données du profil chargées :", profile)
+})
 
 const save = () => {
   console.log("Profil modifié :", profile.value)
