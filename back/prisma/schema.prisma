@@ -1,15 +1,38 @@
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
+  engineType = "library"
 }
+
 
 datasource db {
   provider = "sqlite"
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id     Int     @id @default(autoincrement())
+  email  String  @unique
+  name   String?
   avatar String
+  favorites Favorite[]
+}
+
+model Anime {
+  id          Int     @id @default(autoincrement())
+  title       String
+  rating      Float
+  ranking     Int
+  imageUrl    String
+  imdbLink    String
+  description String?
+  year        Int?
+  favorites   Favorite[]
+}
+
+model Favorite {
+  id      Int @id @default(autoincrement())
+  userId  Int
+  animeId Int
+  user    User @relation(fields: [userId], references: [id])
+  anime   Anime @relation(fields: [animeId], references: [id])
 }

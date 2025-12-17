@@ -9,4 +9,8 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.ts'
+export type * from './models/Anime.ts'
+export type * from './models/Favorite.ts'
 export type * from './commonInputTypes.ts'
+export type * from './models/User.js'
+export type * from './commonInputTypes.js'
