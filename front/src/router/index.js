@@ -11,10 +11,10 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/profile/:id',
-      name: 'Profile',
       component: Detail,
       props: true
+      name: 'Profile',
+      path: '/profile/:id',
     }
   ]
 })
