@@ -4,21 +4,46 @@
       <span class="avatar-icon">👤</span>
     </div>
 
-    <div class="name">{{ username }}</div>
-    <div class="mail">{{ mail }}</div>
+    <!-- Affichage -->
+    <div class="name">{{ profile.username }}</div>
+    <div class="mail">{{ profile.email }}</div>
 
-    <button class="btn" type="button" @click="$emit('edit')">
+    <!-- Inputs -->
+    <input
+      class="name"
+      type="text"
+      v-model="profile.username"
+      placeholder="Nom d'utilisateur"
+    />
+
+    <input
+      class="input"
+      type="email"
+      v-model="profile.email"
+      placeholder="Email"
+    />
+
+    <button class="btn" type="button" @click="save">
       modifier
     </button>
   </div>
 </template>
 
 <script setup>
-defineProps({
-  username: { type: String, default: "nom" },
-  mail: { type: String, default: "Email" },
+import { ref } from "vue"
+
+const profile = ref({
+  id: 1,
+  username: "jdupont",
+  email: "jean.dupont@example.com",
 })
-defineEmits(["edit"])
+
+const emit = defineEmits(["edit"])
+
+const save = () => {
+  console.log("Profil modifié :", profile.value)
+  emit("edit", profile.value)
+}
 </script>
 
 <style scoped>
