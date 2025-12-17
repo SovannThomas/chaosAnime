@@ -4,29 +4,50 @@
       <img :src="avatarUrl" alt="Avatar" class="avatar" />
     </div>
 
-    <input class="name" type="text" :value="username" @input="updateUsername" disabled></input>
-    <input class="mail" type="email" :value="mail" @input="updateMail" disabled></input>
+    <!-- Affichage -->
+    <div class="name">{{ profile.name }}</div>
+    <div class="mail">{{ profile.email }}</div>
 
-    <button class="btn" type="button" @click="$emit('edit')">
+    <!-- Inputs -->
+    <input
+      class="name"
+      type="text"
+      v-model="profile.name"
+      placeholder="Nom d'utilisateur"
+    />
+
+    <button class="btn" type="button" @click="save">
       modifier
     </button>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, computed, onMounted } from "vue"
+import { useRoute } from "vue-router"
+import CallBackend from "../services/api"
+
 const route = useRoute()
-defineProps({
-  username: { type: String, default: "nom" },
-  mail: { type: String, default: "Email" },
+var profile = ref({
+  id:'',
+  name:'',
+  email:'',
+  avatar:''
+})
+const avatarUrl = computed(() => `https://api.dicebear.com/6.x/pixel-art/png?seed=${profile.avatar}`)
+
+const emit = defineEmits(["edit"])
+
+onMounted(async () => {
+  const response = await CallBackend.get(`/api/user/${route.params.id}`)
+  profile.value = response
+  console.log("Données du profil chargées :", profile)
 })
 
-
-const id = computed(() => route.params.id || 'default')
-const avatarUrl = computed(() => `https://api.dicebear.com/6.x/pixel-art/png?seed=${id.value}`)
-
-defineEmits(["edit"])
+const save = () => {
+  console.log("Profil modifié :", profile.value)
+  emit("edit", profile.value)
+}
 </script>
 
 <style scoped>
