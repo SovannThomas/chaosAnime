@@ -8,13 +8,21 @@
       </div>
       <nav class="nav">
         <router-link to="/profile/1" class="nav-link">Mon profil</router-link>
+        <div class="avatar-container">
+          <img :src="imageUrl" alt="Avatar" class="avatar" />
+        </div>
       </nav>
     </div>
   </header>
 </template>
 
 <script setup>
-// Header component
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const id = computed(() => route.params.id || 'default')
+const imageUrl = computed(() => `https://api.dicebear.com/6.x/pixel-art/png?seed=${id.value}`)
 </script>
 
 <style scoped>
@@ -66,6 +74,25 @@
 .nav-link.router-link-active {
   background-color: #42b983;
   color: white;
+}
+
+.avatar-container {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  object-fit: cover;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.avatar:hover {
+  border-color: rgba(255, 255, 255, 0.6);
 }
 </style>
 

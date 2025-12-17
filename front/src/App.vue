@@ -1,11 +1,5 @@
 <script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 import Header from './components/header.vue'
-
-const route = useRoute()
-const id = computed(() => route.params.id || 'default')
-const imageUrl = computed(() => `https://api.dicebear.com/6.x/pixel-art/png?seed=${id.value}`)
 </script>
 
 <template>
@@ -14,7 +8,6 @@ const imageUrl = computed(() => `https://api.dicebear.com/6.x/pixel-art/png?seed
     <main>
       <router-view />
 
-      <img :src="imageUrl" alt="Yuji Itadori">
     </main>
   </div>
 </template>
