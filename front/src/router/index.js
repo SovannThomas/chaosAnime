@@ -24,10 +24,10 @@ const router = createRouter({
       component: Favorites
     },
     {
-      path: '/profile/:id',
-      name: 'Profile',
       component: Detail,
-      props: true
+      props: true,
+      name: 'Profile',
+      path: '/profile/:id',
     }
   ]
 })

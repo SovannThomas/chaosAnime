@@ -18,7 +18,7 @@ class ApiService {
    */
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`
-    
+
     const defaultHeaders = {
       'Content-Type': 'application/json',
     }
@@ -39,11 +39,11 @@ class ApiService {
 
     try {
       const response = await fetch(url, config)
-      
+
       // Gérer les réponses non-JSON (comme les images, fichiers, etc.)
       const contentType = response.headers.get('content-type')
       let data
-      
+
       if (contentType && contentType.includes('application/json')) {
         data = await response.json()
       } else {
@@ -70,7 +70,7 @@ class ApiService {
   async get(endpoint, params = {}) {
     const queryString = new URLSearchParams(params).toString()
     const url = queryString ? `${endpoint}?${queryString}` : endpoint
-    
+
     return this.request(url, {
       method: 'GET',
     })
