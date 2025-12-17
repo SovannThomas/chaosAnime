@@ -14,16 +14,17 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
-
-const props = defineProps({
-  id: { type: String, required: true },
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+defineProps({
   username: { type: String, default: "nom" },
   mail: { type: String, default: "Email" },
 })
 
-const id = props.id
-const avatarUrl = `https://api.dicebear.com/6.x/pixel-art/png?seed=${id}`
+
+const id = computed(() => route.params.id || 'default')
+const avatarUrl = computed(() => `https://api.dicebear.com/6.x/pixel-art/png?seed=${id.value}`)
 
 defineEmits(["edit"])
 </script>
