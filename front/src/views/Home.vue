@@ -62,7 +62,6 @@ onMounted(async () => {
 
 <template>
   <div class="home-container">
-    <h1>ChaosAnime</h1>
     <div class="anime-grid">
       <div v-for="anime in animes" :key="anime.id" class="anime-card">
         <div class="image-wrapper">
