@@ -3,7 +3,12 @@ import { prisma } from './lib/prisma'
 const app = express()
 const port = 3000
 
+import cors = require('cors');
+
 app.use(express.json())
+
+app.options('*', cors() )
+app.use(cors());
 
 app.get('/api/user', async (req, res) => {
 
@@ -67,6 +72,32 @@ app.put('/api/user/:id', async (req, res) => {
         res.status(500).json({ error: "Erreur lors de la mise à jour" });
     }
 });
+
+app.get('/api/disponame', async (req, res) => {
+
+    const {name} = req.body;
+
+    try {
+        const existingUser = await prisma.user.findMany({
+            select: {
+                name: true
+            },
+            where: {
+                name : name
+            }
+        });
+
+        const isAvailable = (existingUser.length <= 0);
+
+        res.json(isAvailable);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erreur serveur" });
+    }
+
+})
+
 
 
 app.listen(port, () => {
