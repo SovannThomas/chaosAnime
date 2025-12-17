@@ -7,7 +7,9 @@
           </router-link>
         </div>
         <nav class="nav">
+          <router-link to="/animes" class="nav-link">Animes</router-link>
           <router-link to="/profile/1" class="nav-link">Mon profil</router-link>
+          <router-link to="/favorites" class="nav-link heart-link">❤️</router-link>
           <div class="avatar-container">
             <img :src="imageUrl" alt="Avatar" class="avatar" />
           </div>
@@ -56,6 +58,7 @@
   .nav {
     display: flex;
     gap: 1.5rem;
+    align-items: center;
   }
   
   .nav-link {
@@ -74,6 +77,12 @@
   .nav-link.router-link-active {
     background-color: #42b983;
     color: white;
+  }
+
+  .heart-link {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    line-height: 1;
   }
   
   .avatar-container {
