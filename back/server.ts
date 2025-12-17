@@ -3,12 +3,18 @@ import { prisma } from './lib/prisma'
 const app = express()
 const port = 3000
 
+app.use(express.json())
+
 app.get('/api/user', async (req, res) => {
 
-    await prisma.user.findMany().then((users) => {
-        res.send(users)
-    });
-
+    try {
+        await prisma.user.findMany().then((users) => {
+            res.send(users)
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erreur serveur" });
+    }
 })
 
 app.get('/api/user/:id', async (req, res) => {
@@ -33,6 +39,36 @@ app.get('/api/user/:id', async (req, res) => {
         res.status(500).json({ error: "Erreur serveur" });
     }
 });
+
+app.put('/api/user/:id', async (req, res) => {
+    const { id } = req.params;
+    const { email, name, avatar } = req.body;
+
+    try {
+        const updatedUser = await prisma.user.update({
+            where: {
+                id: Number(id),
+            },
+            data: {
+
+                email,
+                name,
+                avatar
+            },
+        });
+
+        res.json(updatedUser);
+
+    } catch (error) {
+        if (error.code === 'P2025') {
+            return res.status(404).json({ error: "Utilisateur à modifier non trouvé" });
+        }
+        console.error(error);
+        res.status(500).json({ error: "Erreur lors de la mise à jour" });
+    }
+});
+
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
