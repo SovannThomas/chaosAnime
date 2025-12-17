@@ -5,6 +5,7 @@
     "axios": "^1.13.2",
     "better-sqlite3": "^12.5.0",
     "cheerio": "^1.1.2",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1"
   },
@@ -12,6 +13,7 @@
     "@types/axios": "^0.9.36",
     "@types/better-sqlite3": "^7.6.13",
     "@types/cheerio": "^0.22.35",
+    "@types/cors": "^2.8.19",
     "@types/node": "^25.0.3",
     "prisma": "^7.1.0",
     "tsx": "^4.21.0"
