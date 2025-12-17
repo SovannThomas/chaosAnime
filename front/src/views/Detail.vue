@@ -23,13 +23,15 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { usersMock } from "./../../mocks/users"
+import { computed } from "vue"
+import { usersMock } from "./../mocks/users"
+import { useRoute } from "vue-router"
+
 const route = useRoute()
-defineProps({
-  username: { type: String, default: "nom" },
-  mail: { type: String, default: "Email" },
+
+const profile = computed(() => {
+  const id = Number(route.params.id)
+  return usersMock.find(u => u.id === id)
 })
 const user = computed(() => {
   const id = Number(route.params.id)
